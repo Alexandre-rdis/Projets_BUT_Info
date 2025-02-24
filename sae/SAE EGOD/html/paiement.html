@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Page de contact</title>
+    <link href="../css/paiement.css" rel="stylesheet">
+</head>
+<body>
+  <header class="top-banner">
+    <h1 class="logo"></h1>
+    <nav class="nav-links">
+      <a href="accueil.html">Accueil</a>
+      <a href="tarif.html">Tarifs</a>
+      <a href="véhicules.html">Véhicules</a>
+      <a href="paiement.html">Paiement</a>
+      <a href="itinéraire.html">Calcul de l'itinéraire</a>
+    </nav>
+  </header>
+  <h1>Enregistrement des Informations de Paiement</h1>
+  <p>Veuillez entrer vos informations pour enregistrer votre carte bancaire et faciliter vos paiements pour vos trajets futurs.</p>
+
+  <form>
+    <label for="prenom">Prénom :</label>
+    <input type="text" id="prenom" name="prenom" " placeholder="Martin" required>
+
+    <label for="nom">Nom :</label>
+    <input type="text" id="nom" name="nom" " placeholder="Lutherking" required>
+
+    <label for="carte-numero">Numéro de carte bancaire :</label>
+    <input type="text" id="carte-numero" name="carte-numero" maxlength="19" pattern="\d{16}" placeholder="1234 5678 9012 3456" required>
+
+    <label for="carte-expiration">Date d'expiration (MM/AA) :</label>
+    <input type="text" id="carte-expiration" name="carte-expiration" maxlength="5" pattern="(0[1-9]|1[0-2])\/\d{2}" placeholder="MM/AA" required>
+
+    <label for="carte-cvc">CVC :</label>
+    <input type="text" id="carte-cvc" name="carte-cvc" maxlength="3" pattern="\d{3}" placeholder="???" required>
+
+    <button type="submit">Enregistrer votre moyen de payement</button>
+  </form>
+
+
+</body>
+</html>

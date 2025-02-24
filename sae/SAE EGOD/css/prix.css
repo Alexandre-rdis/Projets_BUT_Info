@@ -1,0 +1,79 @@
+body {
+  background-image: url('../image/prix.png');
+  background-size: cover; /* Ajuste l'image pour couvrir tout l'arrière-plan */
+  background-position: center;  /*Centre l'image */
+  background-repeat: no-repeat;  /*Empêche la répétition de l'image */
+  background-color: #142b55;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  max-width: 600px;
+  margin: auto;
+}
+h1 {
+  color: #ffffff;
+}
+label {
+  display: block;
+  margin: 10px 0 5px;
+}
+input, select, button {
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #45a049;
+}
+.result {
+  font-size: 22px;
+  color: #ffffff;
+  margin-top: 20px;
+}
+    .top-banner {
+        background-color: #000000; /* Couleur de fond du bandeau */
+        color: rgb(0, 0, 0);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 15px 50px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre sous le bandeau */
+        position: sticky;
+        top: 0;
+        width: 100%;
+        z-index: 1000; /* S'assure que le bandeau reste au-dessus du reste du contenu */
+      }
+      
+      .logo {
+        font-size: 30px;
+        font-weight: bold;
+        margin-right: 20px;
+      }
+      
+      .nav-links {
+        display: flex;
+        gap: 75px; /* Espace entre les liens */
+      }
+      
+      .nav-links a {
+        color: rgb(255, 255, 255);
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s ease;
+      }
+      
+      .nav-links a:hover {
+        color: #0099ff; /* Change la couleur du lien au survol */
+      }
+      
+      /* Style pour la section principale */
+      main {
+        padding: 20px;
+        text-align: center;
+      }

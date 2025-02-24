@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calcul de Distance et Itinéraire</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+  <link rel="stylesheet" href="../css/itinéraire.css">
+</head>
+<body>
+    <header class="top-banner">
+        <h1 class="logo"></h1>
+        <nav class="nav-links">
+          <a href="accueil.html">Accueil</a>
+          <a href="tarif.html">Tarifs</a>
+          <a href="véhicules.html">Véhicules</a>
+          <a href="paiement.html">Paiement</a>
+          <a href="itinéraire.html">Calcul de l'itinéraire</a>
+        </nav>
+      </header>
+  <h1>Calcul de Distance et Itinéraire</h1>
+  <div class="input-container">
+    <input type="text" id="origin" placeholder="Lieu de départ">
+    <input type="text" id="destination" placeholder="Lieu de destination">
+    <button onclick="calculateRoute()">Calculer l'itinéraire</button>
+  </div>
+  <p id="distance-info"></p>
+  <div id="map"></div>
+
+  <!-- Scripts pour Leaflet et la gestion de la carte -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // Initialiser la carte
+    var map = L.map('map').setView([48.8566, 2.3522], 5); // Centré sur la France
+
+    // Charger les tuiles de la carte depuis OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+    // Fonction pour calculer l'itinéraire et la distance
+    async function calculateRoute() {
+      const origin = document.getElementById('origin').value;
+      const destination = document.getElementById('destination').value;
+
+      // Utilisation de l'API Nominatim pour obtenir les coordonnées des lieux
+      const geocodeUrl = (location) => `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)}`;
+
+      try {
+        const originResponse = await fetch(geocodeUrl(origin));
+        const originData = await originResponse.json();
+        const destinationResponse = await fetch(geocodeUrl(destination));
+        const destinationData = await destinationResponse.json();
+
+        if (originData.length === 0 || destinationData.length === 0) {
+          alert("Impossible de trouver un ou les deux lieux. Veuillez vérifier.");
+          return;
+        }
+
+        const originCoords = [originData[0].lat, originData[0].lon];
+        const destinationCoords = [destinationData[0].lat, destinationData[0].lon];
+
+        // Afficher les marqueurs sur la carte
+        const originMarker = L.marker(originCoords).addTo(map).bindPopup("Départ: " + origin);
+        const destinationMarker = L.marker(destinationCoords).addTo(map).bindPopup("Destination: " + destination);
+        
+        // Ajuster la vue de la carte pour montrer l'itinéraire
+        map.fitBounds([originCoords, destinationCoords]);
+
+        // Calcul de la distance en kilomètres
+        const distanceKm = calculateDistance(originCoords, destinationCoords);
+        document.getElementById("distance-info").innerText = `Distance: ${distanceKm.toFixed(2)} km`;
+
+        // Dessiner la ligne entre les deux points
+        L.polyline([originCoords, destinationCoords], { color: 'blue' }).addTo(map);
+
+      } catch (error) {
+        console.error("Erreur lors de la récupération des données de géocodage:", error);
+      }
+    }
+
+    // Fonction pour calculer la distance en utilisant la formule Haversine
+    function calculateDistance(coords1, coords2) {
+      const R = 6371; // Rayon de la Terre en km
+      const lat1 = coords1[0] * Math.PI / 180;
+      const lon1 = coords1[1] * Math.PI / 180;
+      const lat2 = coords2[0] * Math.PI / 180;
+      const lon2 = coords2[1] * Math.PI / 180;
+      const dlat = lat2 - lat1;
+      const dlon = lon2 - lon1;
+
+      const a = Math.sin(dlat / 2) * Math.sin(dlat / 2) +
+                Math.cos(lat1) * Math.cos(lat2) *
+                Math.sin(dlon / 2) * Math.sin(dlon / 2);
+
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      return R * c; // Distance en km
+    }
+    
+  </script>
+  <a href="itinéraire.html" class="reset-link">Reset</a>
+  <a href="prix.html" style="display: block; margin-top: 20px;">Calculer le tarif</a>
+</body>
+</html>
